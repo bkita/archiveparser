@@ -21,7 +21,7 @@ end
 #CHECK ALL DOMAINS
 domains.each do |domain|
 
-	puts "checking " + domain
+	#puts "checking " + domain
 
 	begin
 		page = Nokogiri::HTML(open("http://web.archive.org/web/*/" + domain))
