@@ -6,6 +6,7 @@ seo_results = []
 img_dates = []
 dates_to_check = []
 empty_dates = []
+domains_to_whois = []
 snapshots_counter = 0
 result = ""
 
@@ -18,7 +19,9 @@ file.each_line do |line|
 	domains << line
 end
 
+
 #CHECK ALL DOMAINS
+puts "CHECKING ARCHIVE ..."
 domains.each do |domain|
 
 	#puts "checking " + domain
@@ -63,6 +66,9 @@ domains.each do |domain|
 					end
 				end
 
+				domains_to_whois << domain
+
+				puts domain
 				puts result
 				img_dates.clear
 				dates_to_check.clear
@@ -95,5 +101,13 @@ end
 #seo_results.each {|result| out_txt.puts result}
 #out_txt.close
 
-puts "DONE!"
+puts "ARCHIVE DONE!"
+
+puts "CHECKING WHOIS ..."
+
+domains_to_whois.each do |domain_whois|
+	puts domain_whois
+end
+
+puts "WHOIS DONE!"
 
