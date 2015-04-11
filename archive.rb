@@ -23,6 +23,7 @@ end
 
 #CHECK ALL DOMAINS
 puts "CHECKING ARCHIVE ..."
+
 domains.each do |domain|
 
 	#puts "checking " + domain
