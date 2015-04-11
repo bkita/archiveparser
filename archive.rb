@@ -11,6 +11,7 @@ snapshots_counter = 0
 result = ""
 
 #READ DOMAINS FROM FILE
+
 file = File.new('domains.txt', 'r')
 
 file.each_line do |line| 
