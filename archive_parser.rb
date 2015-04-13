@@ -119,10 +119,7 @@ class Archive
   end
 
   def self.domains_whois
-    puts "Domain to check with whois :"
-    @domains_whois.each do |domain_whois|
-      puts domain_whois
-    end
+    @domains_whois
   end
 
   def self.archive_data
