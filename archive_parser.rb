@@ -19,15 +19,18 @@ class Archive
   @snap_to = 8
 
   @archive_summary = Hash.new 
+  @domains_archive = []
 end
 
-def get_archive(domains)
+def get_full_archive(domains)
   domains.each do |domain|
     begin
 
      setup(domain)
-     snapshots_counter(domain)
-     archive_summary(domain)
+     if ((@year_counter.between?(@snap_from, @snap_to)) && (@ratio > 7))
+      snapshots_counter(domain)
+      archive_summary(domain)
+     end
 
    rescue Exception => e
     if e.message == '404 Not Found' 
@@ -36,6 +39,25 @@ def get_archive(domains)
     cleanup
   end
   @archive_summary
+end
+
+def get_short_archive(domains)
+  domains.each do |domain|
+    begin
+
+     setup(domain)
+     if (@year_counter.between?(@snap_from, @snap_to)) && (@ratio > 9)
+      puts domain
+      @domains_archive << domain
+     end
+
+   rescue Exception => e
+    if e.message == '404 Not Found' 
+    end
+  end
+    cleanup
+  end
+  @domains_archive
 end
 
 private
@@ -95,7 +117,6 @@ def cleanup
 end
 
 def snapshots_counter(domain)
-  if @year_counter.between?(@snap_from, @snap_to)
     @years_with_snapshot.each do |snapshot|
       if snapshot.include? ":"
         if !snapshot.include? "000000000000"
@@ -111,14 +132,11 @@ def snapshots_counter(domain)
         end
       end
     end
-  end
   @snapshots_summary
 end
 
 def archive_summary(domain)
-  if @year_counter.between?(@snap_from, @snap_to)
-    @archive_summary[domain] = domain + ";" + @start_year + ";" + @end_year + ";" + @year_counter.to_s + ";" + @saved_times_counter + ";" + @ratio.to_s + ";" + @snapshots_summary
-  end
+  @archive_summary[domain] = domain + ";" + @start_year + ";" + @end_year + ";" + @year_counter.to_s + ";" + @saved_times_counter + ";" + @ratio.to_s + ";" + @snapshots_summary
 end
 
 end
